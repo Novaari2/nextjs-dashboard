@@ -5,6 +5,7 @@ import { lusitana } from "@/app/ui/fonts";
 import { CategoriesTableSkeleton } from "@/app/ui/skeletons";
 import { Suspense } from "react";
 import { fetchCategoriesPages } from "@/app/lib/data";
+import {CreateCategories} from "@/app/ui/categories/buttons";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -22,6 +23,7 @@ export default async function Page({searchParams,}: {searchParams?: {query?: str
             </div>
             <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
                 <Search placeholder="Search categories..." />
+                <CreateCategories />
             </div>
             <Suspense key={query + currentPage} fallback={<CategoriesTableSkeleton />}>
                 <Table query={query} currentPage={currentPage} />

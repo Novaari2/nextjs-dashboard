@@ -129,3 +129,40 @@ export async function deleteInvoice(id: string) {
         }
     }
 }
+
+const CreateCategories = FormSchema.omit({id: true, date: true});
+
+export type Kategori = {
+    errors?: {
+        nama?: string[];
+        photo?: string[];
+    };
+    message?: string | null;
+};
+
+export async function createCategories(prevState: Kategori, formData: FormData){
+    const validatedFields = CreateCategories.safeParse({
+        name: formData.get('nama'),
+        photo: formData.get('photo')
+    });
+
+    if(!validatedFields.success){
+        return {
+            errors: validatedFields.error.flatten().fieldErrors,
+            message: 'Missing fields, Failed to create category',
+        };
+    }
+
+    const {nama, photo} = validatedFields.data;
+
+    try{
+        await sql`INSERT INTO categories (name) VALUES (${nama})`;
+    }catch(error){
+        return {
+            message: 'Database Error: Failed to Create Categories',
+        }
+
+        revalidatePath('/dashboard/categories');
+        redirect('/dashboard/categories');
+    }
+}
