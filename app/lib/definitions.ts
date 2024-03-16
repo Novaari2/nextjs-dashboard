@@ -31,6 +31,22 @@ export type Revenue = {
   revenue: number;
 };
 
+export type Product = {
+  id: string;
+  name: string;
+  categories_id: string;
+  price: number;
+  slug: string;
+  description: string;
+}
+
+export type Category = {
+  id: string;
+  name: string;
+  photo: string;
+  slug: string;
+}
+
 export type LatestInvoice = {
   id: string;
   name: string;
@@ -53,6 +69,13 @@ export type InvoicesTable = {
   date: string;
   amount: number;
   status: 'pending' | 'paid';
+};
+
+export type CategoriesTable = {
+  id: string;
+  name: string;
+  photo: string;
+  slug: string;
 };
 
 export type CustomersTableType = {

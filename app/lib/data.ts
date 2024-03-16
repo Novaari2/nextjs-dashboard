@@ -7,6 +7,7 @@ import {
   LatestInvoiceRaw,
   User,
   Revenue,
+  CategoriesTable,
 } from './definitions';
 import { formatCurrency } from './utils';
 import { unstable_noStore as noStore } from 'next/cache';
@@ -235,5 +236,41 @@ export async function getUser(email: string) {
   } catch (error) {
     console.error('Failed to fetch user:', error);
     throw new Error('Failed to fetch user.');
+  }
+}
+
+export async function fetchFilteredCategories(query: string, currentPage: number){
+  noStore();
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  try{
+    const categories = await sql<CategoriesTable>`
+    SELECT 
+      categories.id,
+      categories.name,
+      categories.photo,
+      categories.createdAt
+    FROM categories
+    ORDER BY categories.createdAt DESC
+    LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+    `;
+
+    return categories.rows;
+  }catch(error){
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch categories.');
+  }
+}
+
+export async function fetchCategoriesPages(query: string){
+  noStore();
+  try{
+    const count = await sql`SELECT COUNT(*) FROM categories WHERE name ILIKE ${`%${query}%`}`;
+
+    const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
+    return totalPages;
+  }catch(error){
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total number of categories.');
   }
 }

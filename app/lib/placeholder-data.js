@@ -180,9 +180,33 @@ const revenue = [
   { month: 'Dec', revenue: 4800 },
 ];
 
+const products = [
+  {
+    id: 'a9d5b8f0-2b6b-4b6d-9b3b-9b9b9b9b9b9b',
+    categories_id: 'a9d5b8f0-2b6b-4b6d-9b3b-9b9b9b9b9b9b',
+    name: 'Product 1',
+    price: 1000,
+    slug: 'product-1',
+    description: 'Product 1 description',
+  }
+];
+
+const categories = [
+  {
+    id: 'a9d5b8f0-2b6b-4b6d-9b3b-9b9b9b9b9b9b',
+    name: 'Snapbag',
+    photo: '/categories/snapbag.png',
+    slug: 'snapbag',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  }
+];
+
 module.exports = {
   users,
   customers,
   invoices,
   revenue,
+  products,
+  categories,
 };
