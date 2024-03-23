@@ -6,7 +6,7 @@ const nextConfig = {
                 protocol: 'http',
                 hostname: 'roduct-ucket.nos.wjv-1.neo.id',
                 port:'',
-                pathname: 'roduct-ucket.nos.wjv-1.neo.id/assets/**'
+                pathname: '/assets/**'
             }
         ]
     }
